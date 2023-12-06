@@ -26,6 +26,8 @@ import { participantMatchesSearch, shouldRenderInviteButton } from '../../functi
 
 import MeetingParticipantItem from './MeetingParticipantItem';
 import styles from './styles';
+import {OPEN_SHARE} from "../../../chat/actionTypes";
+import {getInviteURL} from "../../../base/connection/functions";
 
 
 const MeetingParticipantList = () => {
@@ -37,9 +39,15 @@ const MeetingParticipantList = () => {
     const keyExtractor
         = useCallback((e: undefined, i: number) => i.toString(), []);
     const localParticipant = useSelector(getLocalParticipant);
+
     const onInvite = useCallback(() => {
-        setShareDialogVisiblity(isAddPeopleFeatureEnabled, dispatch);
-        dispatch(doInvitePeople());
+        console.log("邀请其他人=="+ currentRoomId)
+        dispatch({
+            type:OPEN_SHARE,
+            room:currentRoomId
+        } )
+        /*setShareDialogVisiblity(isAddPeopleFeatureEnabled, dispatch);
+        dispatch(doInvitePeople());*/
     }, [ dispatch ]);
     const [ searchString, setSearchString ] = useState('');
     const onSearchStringChange = useCallback((text: string) =>

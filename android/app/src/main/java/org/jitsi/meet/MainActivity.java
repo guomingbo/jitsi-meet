@@ -154,6 +154,9 @@ public class MainActivity extends JitsiMeetActivity {
             .setFeatureFlag("welcomepage.enabled", true)
             .setFeatureFlag("resolution", 360)
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
+            .setFeatureFlag("init.language","zhCN")
+            .setFeatureFlag("recording.enabled",true)
+            .setFeatureFlag("ios.recording.enabled",true)
             .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
     }

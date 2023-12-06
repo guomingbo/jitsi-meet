@@ -21,6 +21,11 @@ import { doInvitePeople } from '../../../invite/actions.native';
 import { getInviteOthersControl } from '../../../share-room/functions';
 
 import styles from './styles';
+import {sendEvent} from "../../../mobile/external-api/functions";
+import {CONFERENCE_FOCUSED, CONFERENCE_JOINED} from "../../../base/conference/actionTypes";
+import {conferenceJoined} from "../../../base/conference/actions";
+import {OPEN_SHARE} from "../../../chat/actionTypes";
+import {getConferenceName} from "../../../base/conference/functions";
 
 
 /**
@@ -57,6 +62,10 @@ interface IProps extends WithTranslation {
      * The Redux Dispatch function.
      */
     dispatch: IStore['dispatch'];
+    /**
+     * Name of the meeting we're currently in.
+     */
+    _meetingName: string;
 }
 
 /**
@@ -123,11 +132,17 @@ class LonelyMeetingExperience extends PureComponent<IProps> {
      * @returns {void}
      */
     _onPress() {
+        console.log("邀请其他人=="+ this.props._meetingName)
+
+        this.props.dispatch({
+            type:OPEN_SHARE,
+            room:this.props._meetingName
+        } )
+       /*
+         const { _isAddPeopleFeatureEnabled, dispatch } = this.props;
         const { _isAddPeopleFeatureEnabled, dispatch } = this.props;
-
         setShareDialogVisiblity(_isAddPeopleFeatureEnabled, dispatch);
-
-        dispatch(doInvitePeople());
+        dispatch(doInvitePeople());*/
     }
 }
 
@@ -151,7 +166,8 @@ function _mapStateToProps(state: IReduxState) {
         _inviteOthersControl,
         _isInBreakoutRoom,
         _isInviteFunctionsDisabled: Boolean(!flag || disableInviteFunctions),
-        _isLonelyMeeting: Boolean(conference && getParticipantCountWithFake(state) === 1)
+        _isLonelyMeeting: Boolean(conference && getParticipantCountWithFake(state) === 1),
+        _meetingName:getConferenceName(state)
     };
 }
 

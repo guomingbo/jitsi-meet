@@ -63,7 +63,7 @@ const GeneralSection = () => {
                     onChange = { onShowPejoinToggled } />
             </FormRow>}
 
-            <FormRow label = 'settings.language'>
+            {/*<FormRow label = 'settings.language'>
                 <View style = { styles.languageButtonContainer as ViewStyle }>
                     <TouchableHighlight onPress = { navigateToLanguageSelect }>
                         <View style = { styles.languageButton as ViewStyle }>
@@ -75,7 +75,7 @@ const GeneralSection = () => {
                         </View>
                     </TouchableHighlight>
                 </View>
-            </FormRow>
+            </FormRow>*/}
         </FormSection>
     );
 };

@@ -149,13 +149,13 @@ class OverflowMenu extends PureComponent<IProps, IState> {
                 {!_reactionsEnabled && !toolbarButtons.has('raisehand') && <RaiseHandButton { ...buttonProps } />}
                 {/* @ts-ignore */}
                 <Divider style = { styles.divider as ViewStyle } />
-                <SecurityDialogButton { ...buttonProps } />
+             {/*   <SecurityDialogButton { ...buttonProps } />*/}
                 <RecordButton { ...buttonProps } />
                 <LiveStreamButton { ...buttonProps } />
                 <LinkToSalesforceButton { ...buttonProps } />
                 {/* @ts-ignore */}
                 <Divider style = { styles.divider as ViewStyle } />
-                <SharedVideoButton { ...buttonProps } />
+              {/*  <SharedVideoButton { ...buttonProps } />*/}
                 {!toolbarButtons.has('screensharing') && <ScreenSharingButton { ...buttonProps } />}
                 {!_isSpeakerStatsDisabled && <SpeakerStatsButton { ...buttonProps } />}
                 {!toolbarButtons.has('tileview') && <TileViewButton { ...buttonProps } />}

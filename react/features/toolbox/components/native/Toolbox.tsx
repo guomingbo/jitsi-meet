@@ -72,7 +72,7 @@ function Toolbox(props: IProps) {
     }
 
     const bottomEdge = Platform.OS === 'ios' && _visible;
-    const { buttonStylesBorderless, hangupButtonStyles, toggledButtonStyles } = _styles;
+    const { buttonStylesBorderless, hangupButtonStyles,hangupMenuButtonStyles, toggledButtonStyles } = _styles;
     const additionalButtons = getMovableButtons(_width);
     const backgroundToggledStyle = {
         ...toggledButtonStyles,
@@ -127,7 +127,9 @@ function Toolbox(props: IProps) {
                     toggledStyles = { toggledButtonStyles } />
                 }
                 { _endConferenceSupported
-                    ? <HangupMenuButton />
+                    ? <HangupMenuButton
+                        styles = { hangupMenuButtonStyles }
+                        toggledStyles = { toggledButtonStyles } />
                     : <HangupButton
                         styles = { hangupButtonStyles } />
                 }

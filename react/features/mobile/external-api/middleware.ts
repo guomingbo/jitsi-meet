@@ -48,7 +48,7 @@ import StateListenerRegistry from '../../base/redux/StateListenerRegistry';
 import { toggleScreensharing } from '../../base/tracks/actions.native';
 import { getLocalTracks, isLocalTrackMuted } from '../../base/tracks/functions.native';
 import { ITrack } from '../../base/tracks/types';
-import { CLOSE_CHAT, OPEN_CHAT } from '../../chat/actionTypes';
+import {CLOSE_CHAT, OPEN_CHAT, OPEN_SHARE} from '../../chat/actionTypes';
 import { closeChat, openChat, sendMessage, setPrivateMessageRecipient } from '../../chat/actions.native';
 import { setRequestingSubtitles } from '../../subtitles/actions.any';
 import { muteLocal } from '../../video-menu/actions.native';
@@ -251,7 +251,17 @@ externalAPIEnabled && MiddlewareRegistry.register(store => next => action => {
                 muted: action.muted
             });
         break;
+    case OPEN_SHARE:
+        console.log("触发分享=="+action.room)
+        console.log("触发分享=="+action.type)
+        sendEvent(store, action.type, {
+            room:action.room
+        });
+        break;
     }
+
+
+
 
     return result;
 });

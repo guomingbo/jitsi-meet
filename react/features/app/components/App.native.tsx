@@ -1,30 +1,31 @@
-import React, { ComponentType } from 'react';
-import { NativeModules, Platform, StyleSheet, View } from 'react-native';
+import React, {ComponentType} from 'react';
+import {NativeModules, Platform, StyleSheet, View} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 
 import BottomSheetContainer from '../../base/dialog/components/native/BottomSheetContainer';
 import DialogContainer from '../../base/dialog/components/native/DialogContainer';
-import { updateFlags } from '../../base/flags/actions';
-import { CALL_INTEGRATION_ENABLED } from '../../base/flags/constants';
-import { clientResized, setSafeAreaInsets } from '../../base/responsive-ui/actions';
+import {updateFlags} from '../../base/flags/actions';
+import {CALL_INTEGRATION_ENABLED, INIT_LANGUAGE} from '../../base/flags/constants';
+import {clientResized, setSafeAreaInsets} from '../../base/responsive-ui/actions';
 import DimensionsDetector from '../../base/responsive-ui/components/DimensionsDetector.native';
-import { updateSettings } from '../../base/settings/actions';
+import {updateSettings} from '../../base/settings/actions';
 import JitsiThemePaperProvider from '../../base/ui/components/JitsiThemeProvider.native';
-import { _getRouteToRender } from '../getRouteToRender.native';
+import {_getRouteToRender} from '../getRouteToRender.native';
 import logger from '../logger';
 
-import { AbstractApp, IProps as AbstractAppProps } from './AbstractApp';
+import {AbstractApp, IProps as AbstractAppProps} from './AbstractApp';
 
 // Register middlewares and reducers.
 import '../middlewares.native';
 import '../reducers.native';
+import i18next from 'i18next';
 
 
 declare let __DEV__: any;
 
-const { AppInfo } = NativeModules;
+const {AppInfo} = NativeModules;
 
 const DialogContainerWrapper = Platform.select({
     default: View
@@ -99,7 +100,7 @@ export class App extends AbstractApp<IProps> {
     render() {
         return (
             <JitsiThemePaperProvider>
-                { super.render() }
+                {super.render()}
             </JitsiThemePaperProvider>
         );
     }
@@ -110,8 +111,8 @@ export class App extends AbstractApp<IProps> {
      * @returns {void}
      */
     async _extraInit() {
-        const { dispatch, getState } = this.state.store ?? {};
-        const { flags = {}, url, userInfo } = this.props;
+        const {dispatch, getState} = this.state.store ?? {};
+        const {flags = {}, url, userInfo} = this.props;
         let callIntegrationEnabled = flags[CALL_INTEGRATION_ENABLED as keyof typeof flags];
 
         // CallKit does not work on the simulator, make sure we disable it.
@@ -142,7 +143,7 @@ export class App extends AbstractApp<IProps> {
         const rootNavigationReady = new Promise<void>(resolve => {
             const i = setInterval(() => {
                 // @ts-ignore
-                const { ready } = getState()['features/app'] || {};
+                const {ready} = getState()['features/app'] || {};
 
                 if (ready) {
                     clearInterval(i);
@@ -157,10 +158,10 @@ export class App extends AbstractApp<IProps> {
         if (typeof url !== 'undefined') {
 
             // @ts-ignore
-            const { serverURL } = url;
+            const {serverURL} = url;
 
             if (typeof serverURL !== 'undefined') {
-                dispatch?.(updateSettings({ serverURL }));
+                dispatch?.(updateSettings({serverURL}));
             }
         }
 
@@ -169,7 +170,11 @@ export class App extends AbstractApp<IProps> {
 
         // Update settings with feature-flag.
         if (typeof callIntegrationEnabled !== 'undefined') {
-            dispatch?.(updateSettings({ disableCallIntegration: !callIntegrationEnabled }));
+            dispatch?.(updateSettings({disableCallIntegration: !callIntegrationEnabled}));
+        }
+        if (typeof flags !== 'undefined' && flags[INIT_LANGUAGE] != 'undefined') {
+            console.log("设置语言"+flags[INIT_LANGUAGE] );
+            i18next.changeLanguage(flags[INIT_LANGUAGE]);
         }
     }
 
@@ -183,9 +188,9 @@ export class App extends AbstractApp<IProps> {
         return (
             <SafeAreaProvider>
                 <DimensionsDetector
-                    onDimensionsChanged = { this._onDimensionsChanged }
-                    onSafeAreaInsetsChanged = { this._onSafeAreaInsetsChanged }>
-                    { super._createMainElement(component, props) }
+                    onDimensionsChanged={this._onDimensionsChanged}
+                    onSafeAreaInsetsChanged={this._onSafeAreaInsetsChanged}>
+                    {super._createMainElement(component, props)}
                 </DimensionsDetector>
             </SafeAreaProvider>
         );
@@ -241,7 +246,7 @@ export class App extends AbstractApp<IProps> {
      * @returns {void}
      */
     _onDimensionsChanged(width: number, height: number) {
-        const { dispatch } = this.state.store ?? {};
+        const {dispatch} = this.state.store ?? {};
 
         dispatch?.(clientResized(width, height));
     }
@@ -258,7 +263,7 @@ export class App extends AbstractApp<IProps> {
      * @returns {void}
      */
     _onSafeAreaInsetsChanged(insets: Object) {
-        const { dispatch } = this.state.store ?? {};
+        const {dispatch} = this.state.store ?? {};
 
         dispatch?.(setSafeAreaInsets(insets));
     }
@@ -271,10 +276,10 @@ export class App extends AbstractApp<IProps> {
     _renderDialogContainer() {
         return (
             <DialogContainerWrapper
-                pointerEvents = 'box-none'
-                style = { StyleSheet.absoluteFill }>
-                <BottomSheetContainer />
-                <DialogContainer />
+                pointerEvents='box-none'
+                style={StyleSheet.absoluteFill}>
+                <BottomSheetContainer/>
+                <DialogContainer/>
             </DialogContainerWrapper>
         );
     }
@@ -301,7 +306,7 @@ function _handleException(error: Error, fatal: boolean) {
     } else {
         // Forward to the next globalHandler of ErrorUtils.
         // @ts-ignore
-        const { next } = _handleException;
+        const {next} = _handleException;
 
         typeof next === 'function' && next(error, fatal);
     }

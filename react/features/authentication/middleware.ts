@@ -40,6 +40,9 @@ import {
 import { LoginDialog, WaitForOwnerDialog } from './components';
 import { getTokenAuthUrl, isTokenAuthEnabled } from './functions';
 import logger from './logger';
+import {toJid} from "../base/connection/functions";
+import {authenticateAndUpgradeRole} from "./actions.any";
+import {connect} from "../base/connection/actions.native";
 
 
 /**
@@ -262,6 +265,7 @@ function _handleLogin({ dispatch, getState }: IStore) {
     const { enabled: audioOnlyEnabled } = state['features/base/audio-only'];
     const audioMuted = isLocalTrackMuted(state['features/base/tracks'], MEDIA_TYPE.AUDIO);
     const videoMuted = isLocalTrackMuted(state['features/base/tracks'], MEDIA_TYPE.VIDEO);
+    const { hosts: configHosts } = state['features/base/config'];
 
     if (!room) {
         logger.warn('Cannot handle login, room is undefined!');

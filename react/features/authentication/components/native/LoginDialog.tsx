@@ -271,7 +271,7 @@ class LoginDialog extends Component<IProps, IState> {
         const { password, username } = this.state;
         const jid = toJid(username, this.props._configHosts ?? {});
         let r;
-
+        console.log("jid==="+jid)
         // If there's a conference it means that the connection has succeeded,
         // but authentication is required in order to join the room.
         if (conference) {

@@ -57,10 +57,7 @@ const SettingsView = ({ isInWelcomePage }: IProps) => {
             style = { styles.settingsViewContainer }>
             <ScrollView bounces = { scrollBounces }>
                 <View style = { styles.profileContainerWrapper as ViewStyle }>
-                    <TouchableHighlight
-
-                        /* eslint-disable react/jsx-no-bind */
-                        onPress = { () => navigate(screen.settings.profile) }>
+                        <TouchableHighlight>
                         <View
                             style = { styles.profileContainer as ViewStyle }>
                             <Avatar
@@ -69,10 +66,10 @@ const SettingsView = ({ isInWelcomePage }: IProps) => {
                             <Text style = { styles.displayName as TextStyle }>
                                 { displayName }
                             </Text>
-                            <Icon
+                           {/* <Icon
                                 size = { 24 }
                                 src = { IconArrowRight }
-                                style = { styles.profileViewArrow } />
+                                style = { styles.profileViewArrow } />*/}
                         </View>
                     </TouchableHighlight>
                 </View>
@@ -90,9 +87,9 @@ const SettingsView = ({ isInWelcomePage }: IProps) => {
                         <ModeratorSection />
                     </> }
                 <Divider style = { styles.fieldSeparator as ViewStyle } />
-                <AdvancedSection />
-                <Divider style = { styles.fieldSeparator as ViewStyle } />
-                <LinksSection />
+                {/*<AdvancedSection />*/}
+               {/* <Divider style = { styles.fieldSeparator as ViewStyle } />
+                <LinksSection />*/}
             </ScrollView>
         </JitsiScreen>
     );

@@ -143,7 +143,7 @@ class MeetingParticipantItem extends PureComponent<IProps> {
             _videoMediaState
         } = this.props;
 
-        return (
+        /*return (
             <ParticipantItem
                 audioMediaState = { _audioMediaState }
                 disableModeratorIndicator = { _disableModeratorIndicator }
@@ -151,6 +151,17 @@ class MeetingParticipantItem extends PureComponent<IProps> {
                 isModerator = { _isModerator }
                 local = { _local }
                 onPress = { this._onPress }
+                participantID = { _participantID }
+                raisedHand = { _raisedHand }
+                videoMediaState = { _videoMediaState } />
+        );*/
+        return (
+            <ParticipantItem
+                audioMediaState = { _audioMediaState }
+                disableModeratorIndicator = { _disableModeratorIndicator }
+                displayName = { _displayName }
+                isModerator = { _isModerator }
+                local = { _local }
                 participantID = { _participantID }
                 raisedHand = { _raisedHand }
                 videoMediaState = { _videoMediaState } />
