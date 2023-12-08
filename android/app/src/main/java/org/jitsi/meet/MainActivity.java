@@ -155,10 +155,12 @@ public class MainActivity extends JitsiMeetActivity {
             .setFeatureFlag("resolution", 360)
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
             .setFeatureFlag("init.language","zhCN")
-            .setFeatureFlag("recording.enabled",true)
-            .setFeatureFlag("ios.recording.enabled",true)
+            .setFeatureFlag("recording.enabled",false)
+            .setFeatureFlag("live-streaming.enabled",false)
+           // .setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250ZXh0Ijp7InVzZXIiOnsiYXZhdGFyIjoiaHR0cHM6L2dyYXZhdGFyLmNvbS9hdmF0YXIvYWJjMTIzIiwibmFtZSI6InBybyIsImVtYWlsIjoiamRvZUBleGFtcGxlLmNvbSJ9fSwiYXVkIjoiaml0c2kiLCJpc3MiOiJuZXQuaml0c2kuc2RrdGVzdCIsInN1YiI6Im1lZXQuZGVwYWFzLmRlIiwicm9vbSI6IioifQ.TTnh4p2UsdQiRb4TXpnXZaQhVRVGvFMEwcG-VSSCUv8")
             .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
+
     }
 
     private void resolveRestrictions() {

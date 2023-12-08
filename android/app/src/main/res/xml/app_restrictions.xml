@@ -3,9 +3,9 @@
 
     <!-- Server URL configuration -->
     <restriction
-        android:defaultValue="https://meet.depaas.de/"
+        android:defaultValue="https://desmeet.depaas.de/"
         android:description="@string/restriction_server_url_description"
-        android:key="https://meet.depaas.de/"
+        android:key="SERVER_URL"
         android:restrictionType="string"
         android:title="@string/restriction_server_url_title"/>
 </restrictions>

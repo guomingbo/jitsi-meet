@@ -60,6 +60,10 @@ import { READY_TO_CLOSE } from './actionTypes';
 import { setParticipantsWithScreenShare } from './actions';
 import { participantToParticipantInfo, sendEvent } from './functions';
 import logger from './logger';
+import {hideSheet} from "../../base/dialog/actions";
+import {sendAnalytics} from "../../analytics/functions";
+import {createToolbarEvent} from "../../analytics/AnalyticsEvents";
+import {endConference} from "../../base/conference/actions";
 
 /**
  * Event which will be emitted on the native side when a chat message is received
@@ -396,6 +400,14 @@ function _registerForNativeEvents(store: IStore) {
     eventEmitter.addListener(ExternalAPI.TOGGLE_CAMERA, () => {
         dispatch(toggleCameraFacingMode());
     });
+
+    eventEmitter.addListener(ExternalAPI.STOP_MEET, () => {
+        dispatch(hideSheet());
+        sendAnalytics(createToolbarEvent('endmeeting'));
+        dispatch(endConference()).then(r => {
+            console.log("stop meet")
+        });
+    });
 }
 
 /**
@@ -416,6 +428,7 @@ function _unregisterForNativeEvents() {
     eventEmitter.removeAllListeners(ExternalAPI.SEND_CHAT_MESSAGE);
     eventEmitter.removeAllListeners(ExternalAPI.SET_CLOSED_CAPTIONS_ENABLED);
     eventEmitter.removeAllListeners(ExternalAPI.TOGGLE_CAMERA);
+    eventEmitter.removeAllListeners(ExternalAPI.STOP_MEET);
 }
 
 /**

@@ -28,6 +28,7 @@ static NSString * const sendChatMessageAction = @"org.jitsi.meet.SEND_CHAT_MESSA
 static NSString * const setVideoMutedAction = @"org.jitsi.meet.SET_VIDEO_MUTED";
 static NSString * const setClosedCaptionsEnabledAction = @"org.jitsi.meet.SET_CLOSED_CAPTIONS_ENABLED";
 static NSString * const toggleCameraAction = @"org.jitsi.meet.TOGGLE_CAMERA";
+static NSString * const stopMeetAction = @"org.jitsi.meet.STOP_MEET";
 
 @implementation ExternalAPI
 
@@ -52,7 +53,8 @@ RCT_EXPORT_MODULE();
         @"SEND_CHAT_MESSAGE": sendChatMessageAction,
         @"SET_VIDEO_MUTED" : setVideoMutedAction,
         @"SET_CLOSED_CAPTIONS_ENABLED": setClosedCaptionsEnabledAction,
-        @"TOGGLE_CAMERA": toggleCameraAction
+        @"TOGGLE_CAMERA": toggleCameraAction,
+        @"STOP_MEET": stopMeetAction,
     };
 };
 
@@ -78,7 +80,8 @@ RCT_EXPORT_MODULE();
               sendChatMessageAction,
               setVideoMutedAction,
               setClosedCaptionsEnabledAction,
-              toggleCameraAction
+              toggleCameraAction,
+              stopMeetAction
     ];
 }
 
@@ -96,7 +99,7 @@ RCT_EXPORT_METHOD(sendEvent:(NSString *)name
         [self onParticipantsInfoRetrieved: data];
         return;
     }
-    
+
     [[NSNotificationCenter defaultCenter] postNotificationName:sendEventNotificationName
                                                         object:nil
                                                       userInfo:@{@"name": name, @"data": data}];
@@ -105,7 +108,7 @@ RCT_EXPORT_METHOD(sendEvent:(NSString *)name
 - (void) onParticipantsInfoRetrieved:(NSDictionary *)data {
     NSArray *participantsInfoArray = [data objectForKey:@"participantsInfo"];
     NSString *completionHandlerId = [data objectForKey:@"requestId"];
-    
+
     void (^completionHandler)(NSArray*) = [participantInfoCompletionHandlers objectForKey:completionHandlerId];
     completionHandler(participantsInfoArray);
     [participantInfoCompletionHandlers removeObjectForKey:completionHandlerId];
@@ -125,30 +128,30 @@ RCT_EXPORT_METHOD(sendEvent:(NSString *)name
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
     data[@"to"] = to;
     data[@"message"] = message;
-    
+
     [self sendEventWithName:sendEndpointTextMessageAction body:data];
 }
 
 - (void)toggleScreenShare:(BOOL)enabled {
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
     data[@"enabled"] = [NSNumber numberWithBool:enabled];
-    
+
     [self sendEventWithName:toggleScreenShareAction body:data];
 }
 
 - (void)retrieveParticipantsInfo:(void (^)(NSArray*))completionHandler {
     NSString *completionHandlerId = [[NSUUID UUID] UUIDString];
     NSDictionary *data = @{ @"requestId": completionHandlerId};
-    
+
     [participantInfoCompletionHandlers setObject:[completionHandler copy] forKey:completionHandlerId];
-    
+
     [self sendEventWithName:retrieveParticipantsInfoAction body:data];
 }
 
 - (void)openChat:(NSString*)to {
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
     data[@"to"] = to;
-    
+
     [self sendEventWithName:openChatAction body:data];
 }
 
@@ -160,7 +163,7 @@ RCT_EXPORT_METHOD(sendEvent:(NSString *)name
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
     data[@"to"] = to;
     data[@"message"] = message;
-    
+
     [self sendEventWithName:sendChatMessageAction body:data];
 }
 
@@ -178,6 +181,10 @@ RCT_EXPORT_METHOD(sendEvent:(NSString *)name
 
 - (void)toggleCamera {
     [self sendEventWithName:toggleCameraAction body:nil];
+}
+
+- (void)stopMeet {
+    [self sendEventWithName:stopMeetAction body:nil];
 }
 
 @end

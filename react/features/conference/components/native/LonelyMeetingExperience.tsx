@@ -26,6 +26,7 @@ import {CONFERENCE_FOCUSED, CONFERENCE_JOINED} from "../../../base/conference/ac
 import {conferenceJoined} from "../../../base/conference/actions";
 import {OPEN_SHARE} from "../../../chat/actionTypes";
 import {getConferenceName} from "../../../base/conference/functions";
+import {enterPictureInPicture} from "../../../mobile/picture-in-picture/actions";
 
 
 /**
@@ -133,7 +134,6 @@ class LonelyMeetingExperience extends PureComponent<IProps> {
      */
     _onPress() {
         console.log("邀请其他人=="+ this.props._meetingName)
-
         this.props.dispatch({
             type:OPEN_SHARE,
             room:this.props._meetingName

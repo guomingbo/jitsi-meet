@@ -130,6 +130,10 @@
   NSLog(@"%@%@", @"Video muted changed: ", data[@"muted"]);
 }
 
+- (void)openShare:(NSDictionary *)data {
+    [self _onJitsiMeetViewDelegateEvent:@"OPEN_SHARE" withData:data];
+}
+
 #pragma mark - Helpers
 
 - (void)terminate {

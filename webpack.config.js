@@ -12,7 +12,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
  * development with webpack-dev-server.
  */
 const devServerProxyTarget
-    = process.env.WEBPACK_DEV_SERVER_PROXY_TARGET || 'https://meet.depaas.de';
+    = process.env.WEBPACK_DEV_SERVER_PROXY_TARGET || 'https://desmeet.depaas.de';
 
 /**
  * Build a Performance configuration object for the given size.

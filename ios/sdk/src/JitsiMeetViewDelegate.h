@@ -116,4 +116,9 @@
  */
 - (void)readyToClose:(NSDictionary *)data;
 
+/**
+* open share click
+*/
+- (void)openShare:(NSDictionary *)data;
+
 @end

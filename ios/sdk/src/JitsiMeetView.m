@@ -70,7 +70,7 @@ static NSString *const PiPEnabledFeatureFlag = @"pip.enabled";
     // the default background color.
     self.backgroundColor
         = [UIColor colorWithRed:.07f green:.07f blue:.07f alpha:1];
-    
+
     [self registerObservers];
 }
 
@@ -141,6 +141,11 @@ static NSString *const PiPEnabledFeatureFlag = @"pip.enabled";
 - (void)toggleCamera {
     ExternalAPI *externalAPI = [[JitsiMeet sharedInstance] getExternalAPI];
     [externalAPI toggleCamera];
+}
+
+- (void)stopMeet {
+    ExternalAPI *externalAPI = [[JitsiMeet sharedInstance] getExternalAPI];
+    [externalAPI stopMeet];
 }
 
 #pragma mark Private methods

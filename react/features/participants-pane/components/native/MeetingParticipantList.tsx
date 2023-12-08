@@ -28,6 +28,7 @@ import MeetingParticipantItem from './MeetingParticipantItem';
 import styles from './styles';
 import {OPEN_SHARE} from "../../../chat/actionTypes";
 import {getInviteURL} from "../../../base/connection/functions";
+import {enterPictureInPicture} from "../../../mobile/picture-in-picture/actions";
 
 
 const MeetingParticipantList = () => {

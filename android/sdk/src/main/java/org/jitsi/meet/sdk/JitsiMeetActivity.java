@@ -30,6 +30,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.PermissionListener;
 
 import org.jitsi.meet.sdk.log.JitsiMeetLogger;
@@ -60,6 +62,16 @@ public class JitsiMeetActivity extends AppCompatActivity
             onBroadcastReceived(intent);
         }
     };
+   public static JitsiMeetActivity meetActivity;
+    public static JitsiMeetActivity getInstance() {
+        return meetActivity;
+    }
+
+    public static void stopMeet(){
+        String actionName = BroadcastAction.Type.STOP_MEET.getAction();
+        WritableMap data = Arguments.createMap();
+        ReactInstanceManagerHolder.emitEvent(actionName, data);
+    }
 
     /**
      * Instance of the {@link JitsiMeetView} which this activity will display.
@@ -99,7 +111,7 @@ public class JitsiMeetActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        meetActivity = this;
         setContentView(R.layout.activity_jitsi_meet);
         this.jitsiView = findViewById(R.id.jitsiView);
 
